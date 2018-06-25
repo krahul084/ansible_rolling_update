@@ -14,8 +14,12 @@
   - name: Install wget 
     yum: name=wget state=latest
   - name: Clean Existing App Directory
-    raw: sudo rm -rf /app/*
+    raw: rm -rf /app/*
   - name: Get the latest version
-    get_url: url='{{ Version1.1 }}'  dest=/app mode=0755 owner=ansible group=ansible
-  - pause:
+    get_url: url='{{ Version1 }}'  dest=/app mode=0755 owner=ansible group=ansible force=yes
+    notify: Pause Deployment
+
+  handlers:
+  - name: Pause Deployment
+    pause:
       seconds: 10
