@@ -1,10 +1,10 @@
 --- #Playbook to install junit application in all hosts
-- hosts: all
+- hosts: nuvera
   become: yes
   become_user: ansible
   become_method: sudo
   connection: ssh
-  serial: 2
+  serial: 1
   gather_facts: yes
   vars_files:
   - variables.yaml
@@ -13,9 +13,9 @@
     file: path="/app" mode=0755 owner=ansible group=ansible state=directory
   - name: Install wget 
     yum: name=wget state=latest
-  - name: Clean Existing app
+  - name: Clean Existing App Directory
     raw: sudo rm -rf /app/*
   - name: Get the latest version
-    get_url: url='{{ revision1 }}'  dest=/app mode=0755 owner=ansible backup=yes
+    get_url: url='{{ Version1.1 }}'  dest=/app mode=0755 owner=ansible group=ansible
   - pause:
       seconds: 10
